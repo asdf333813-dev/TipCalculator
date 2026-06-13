@@ -1,5 +1,10 @@
 package com.example.tipcalculator
 
+import androidx.compose.material3.Slider
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -39,6 +44,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun TipCalculatorScreen(modifier: Modifier = Modifier) {
+    var tipPercent by remember { mutableStateOf(0f) }
     Column(
         modifier = modifier.padding(16.dp)
     ) {
@@ -59,6 +65,17 @@ fun TipCalculatorScreen(modifier: Modifier = Modifier) {
             onValueChange = {},
             modifier = Modifier.width(120.dp)
         )
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(text = "Чаевые:")
+
+        Slider(
+            value = tipPercent,
+            onValueChange = { tipPercent = it },
+            valueRange = 0f..25f
+        )
+
+        Text(text = "${tipPercent.toInt()}%")
     }
 }
 @Preview(showBackground = true)
