@@ -47,16 +47,28 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun TipCalculatorScreen(modifier: Modifier = Modifier) {
-    var tipPercent by remember { mutableStateOf(0f) }
-    var selectedDiscount by remember { mutableStateOf(3) }
+    var orderAmount by remember { mutableStateOf("1500") }
+    var dishCount by remember { mutableStateOf("11") }
+    var tipPercent by remember { mutableStateOf(25f) }
+
+    val count = dishCount.toIntOrNull() ?: 0
+
+    val selectedDiscount = when {
+        count in 1..2 -> 3
+        count in 3..5 -> 5
+        count in 6..10 -> 7
+        count > 10 -> 10
+        else -> 3
+    }
+
     Column(
-        modifier = modifier.padding(16.dp)
+        modifier = modifier.padding(all = 16.dp)
     ) {
         Text(text = "Сумма заказа:")
 
         TextField(
-            value = "",
-            onValueChange = {},
+            value = orderAmount,
+            onValueChange = { orderAmount = it },
             modifier = Modifier.width(120.dp)
         )
 
@@ -65,10 +77,11 @@ fun TipCalculatorScreen(modifier: Modifier = Modifier) {
         Text(text = "Количество блюд:")
 
         TextField(
-            value = "",
-            onValueChange = {},
+            value = dishCount,
+            onValueChange = { dishCount = it },
             modifier = Modifier.width(120.dp)
         )
+
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(text = "Чаевые:")
@@ -90,7 +103,7 @@ fun TipCalculatorScreen(modifier: Modifier = Modifier) {
         ) {
             RadioButton(
                 selected = selectedDiscount == 3,
-                onClick = { selectedDiscount = 3 }
+                onClick = {}
             )
             Text(text = "3%")
 
@@ -98,7 +111,7 @@ fun TipCalculatorScreen(modifier: Modifier = Modifier) {
 
             RadioButton(
                 selected = selectedDiscount == 5,
-                onClick = { selectedDiscount = 5 }
+                onClick = {}
             )
             Text(text = "5%")
 
@@ -106,7 +119,7 @@ fun TipCalculatorScreen(modifier: Modifier = Modifier) {
 
             RadioButton(
                 selected = selectedDiscount == 7,
-                onClick = { selectedDiscount = 7 }
+                onClick = {}
             )
             Text(text = "7%")
 
@@ -114,7 +127,7 @@ fun TipCalculatorScreen(modifier: Modifier = Modifier) {
 
             RadioButton(
                 selected = selectedDiscount == 10,
-                onClick = { selectedDiscount = 10 }
+                onClick = {}
             )
             Text(text = "10%")
         }
