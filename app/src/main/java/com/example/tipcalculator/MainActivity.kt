@@ -1,5 +1,8 @@
 package com.example.tipcalculator
 
+import androidx.compose.ui.Alignment
+import androidx.compose.foundation.layout.Row
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Slider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -45,6 +48,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun TipCalculatorScreen(modifier: Modifier = Modifier) {
     var tipPercent by remember { mutableStateOf(0f) }
+    var selectedDiscount by remember { mutableStateOf(3) }
     Column(
         modifier = modifier.padding(16.dp)
     ) {
@@ -76,6 +80,44 @@ fun TipCalculatorScreen(modifier: Modifier = Modifier) {
         )
 
         Text(text = "${tipPercent.toInt()}%")
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(text = "Скидка:")
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            RadioButton(
+                selected = selectedDiscount == 3,
+                onClick = { selectedDiscount = 3 }
+            )
+            Text(text = "3%")
+
+            Spacer(modifier = Modifier.width(8.dp))
+
+            RadioButton(
+                selected = selectedDiscount == 5,
+                onClick = { selectedDiscount = 5 }
+            )
+            Text(text = "5%")
+
+            Spacer(modifier = Modifier.width(8.dp))
+
+            RadioButton(
+                selected = selectedDiscount == 7,
+                onClick = { selectedDiscount = 7 }
+            )
+            Text(text = "7%")
+
+            Spacer(modifier = Modifier.width(8.dp))
+
+            RadioButton(
+                selected = selectedDiscount == 10,
+                onClick = { selectedDiscount = 10 }
+            )
+            Text(text = "10%")
+        }
     }
 }
 @Preview(showBackground = true)
